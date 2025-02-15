@@ -1,0 +1,24 @@
+*{
+    box-sizing: border-box;
+}
+button{
+    transition:all 0.2s linear; 
+}
+button:hover{
+    scale: 1.1;
+}
+.setshow{
+    pointer-events: none;
+    opacity: 0;
+  
+    transition: all 0.2s ease-in;
+}
+.showexport{
+
+}
+.showexport:hover .setshow{
+    opacity: 100;
+    margin-top: 10px;
+    pointer-events: all;
+    
+}
