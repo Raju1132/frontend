@@ -9,6 +9,10 @@ function Filter() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [error, setError] = useState("");
+
+  // Get today's date in yyyy-mm-dd format
+  const today = new Date().toISOString().split('T')[0];
+
   useEffect(() => {
     axios.get("http://localhost:8080/filter").then((response) => {
       setData(response.data);
@@ -37,7 +41,8 @@ function Filter() {
     });
     setFilteredData(filtered);
   };
-const exportCSV = () => {
+
+  const exportCSV = () => {
     let headers = ["Name,Mobile,Email,RegDate"];
     let dataCsv = filteredData.reduce((acc, user) => {
       const { name, mobile, email, regdate } = user;
@@ -112,6 +117,7 @@ const exportCSV = () => {
               type="date"
               name="to"
               value={toDate}
+              max={today} // Set the max date to today
               onChange={(e) => setToDate(e.target.value)}
             />
           </div>
@@ -121,6 +127,7 @@ const exportCSV = () => {
               type="date"
               name="from"
               value={fromDate}
+              max={today} // Set the max date to today
               onChange={(e) => setFromDate(e.target.value)}
             />
           </div>
@@ -145,37 +152,37 @@ const exportCSV = () => {
           </div>
         </div>
       </div>
-    <div className="rounded-2xl ">
-      <table className="h-fit w-[40vw]  ">
-        <thead>
-          <tr className="">
-            <th className="px-2 py-1 border-b text-center">Name</th>
-            <th className="px-2 py-1 border-b text-center">Mobile</th>
-            <th className="px-2 py-1 border-b text-center">Email</th>
-            <th className="px-2 py-1 border-b text-center">RegDate</th>
-          </tr>
-        </thead>
-        <tbody className="">
-          {filteredData.map((product, key) => {
-            return (
-              <tr key={key}>
-                <td className="px-2 py-1 border-b text-center">
-                  {product.name}
-                </td>
-                <td className="px-2 py-1 border-b text-center">
-                  {product.mobile}
-                </td>
-                <td className="px-2 py-1 border-b text-center">
-                  {product.email}
-                </td>
-                <td className="px-2 py-1 border-b text-center">
-                  {product.regdate}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="rounded-2xl ">
+        <table className="h-fit w-[40vw]  ">
+          <thead>
+            <tr className="">
+              <th className="px-2 py-1 border-b text-center">Name</th>
+              <th className="px-2 py-1 border-b text-center">Mobile</th>
+              <th className="px-2 py-1 border-b text-center">Email</th>
+              <th className="px-2 py-1 border-b text-center">RegDate</th>
+            </tr>
+          </thead>
+          <tbody className="">
+            {filteredData.map((product, key) => {
+              return (
+                <tr key={key}>
+                  <td className="px-2 py-1 border-b text-center">
+                    {product.name}
+                  </td>
+                  <td className="px-2 py-1 border-b text-center">
+                    {product.mobile}
+                  </td>
+                  <td className="px-2 py-1 border-b text-center">
+                    {product.email}
+                  </td>
+                  <td className="px-2 py-1 border-b text-center">
+                    {product.regdate}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
